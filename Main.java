@@ -1,31 +1,70 @@
 package converter;
 
-import java.util.Scanner;
+import java.util.*;
+import java.lang.StringBuilder;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        Scanner scanner = new Scanner(System.in);
+        int number = getDecimalNumber();
+        int base = getTargetBase();
+        String result = convert(number, base).toString();
+        System.out.println("Conversion result: " + result);
+    }
 
+    public static int getDecimalNumber() {
+        Scanner in = new Scanner(System.in);
         System.out.print("Enter number in decimal system: ");
-        int decimal = scanner.nextInt();
+        int input = 0;
+        try {
+            input = in.nextInt();
+            in.close();
+        } catch (Exception e) {
+            getDecimalNumber();
+        }
+        return input;
+    }
 
+
+    public static int getTargetBase(){
+        Scanner in = new Scanner(System.in);
         System.out.print("Enter target base: ");
-        int base = scanner.nextInt();
-
-
-        if (base == 2) {
-            System.out.println("Conversion result: " + Integer.toBinaryString(decimal));
+        int base = in.nextInt();
+        in.close();
+        if(base != 2 && base != 8 && base != 16){
+            getTargetBase();
+        }
+        return base;
         }
 
-        if(base == 8) {
-            System.out.println("Conversion result: " + Integer.toOctalString(decimal));
+
+    public static StringBuilder convert (int number, int base) {
+        Hex hex = new Hex();
+
+        StringBuilder output = new StringBuilder();
+        ArrayList<Object> remainders = new ArrayList<>();
+        double quotient = number;
+       // double remainder = Math.floor(quotient % base);
+        do{
+            remainders.add((int)Math.floor(quotient % base));
+            quotient = Math.floor(quotient / base);
+           // remainder = Math.floor(quotient % base);
+        }while (quotient >= 1);
+
+        Collections.reverse(remainders);
+
+        for (Object o : remainders) {
+            if (base == 16 && (int)o  > 9){
+                output.append(hex.get((int)o));
+            } else {output.append(o);}
+
         }
 
-        if(base == 16) {
-            System.out.println("Conversion result: " + Integer.toHexString(decimal));
-        }
-
+        return output;
     }
 }
+
+
+
+
