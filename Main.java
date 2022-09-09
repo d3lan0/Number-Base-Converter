@@ -1,21 +1,22 @@
 package converter;
 
 
-import static converter.Converter.convert;
-import static converter.Input.getDecimalNumber;
-import static converter.Input.getTargetBase;
+import static converter.Converter.convertFromDec;
+import static converter.Converter.convertToDec;
+import static converter.Input.*;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        int number = getDecimalNumber();
+        String source = getSource();
+        System.out.println(source);
+        /*int number = getDecimalNumber();
         int base = getTargetBase();
-        String result = convert(number, base).toString();
-        System.out.println("Conversion result: " + result);
+        int result = convertToDec("12121", 3);
+        System.out.println("Conversion result: " + result);*/
     }
 }
-
 
 
 
