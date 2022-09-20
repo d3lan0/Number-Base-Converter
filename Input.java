@@ -1,75 +1,63 @@
 package converter;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Input {
 
 
-    public static int getDecimalNumber() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter number in decimal system: ");
-        int input = 0;
-        try {
-            input = in.nextInt();
-            in.close();
-        } catch (Exception e) {
-            getDecimalNumber();
-        }
-        return input;
-    }
-
-    public static int getTargetBase(){
-        Scanner in = new Scanner(System.in);
-        int base = 0;
-        boolean validator;
-        do {
-            System.out.print("Enter target base: ");
-            try{
-                base = in.nextInt();
-            }catch (Exception e){
-                getTargetBase();
-            }
-            validator = base == 2 || base == 8 || base == 16;
-        }
-        while (!validator);
-        in.close();
-        return base;
-    }
-
-    public static String getSource(){
-        Scanner in = new Scanner(System.in);
-        Pattern validPattern = Pattern.compile("^[0-9A-Fa-f]+$");
-        boolean valid;
+    public static ArrayList<Integer> levelOne() {
         String input;
-        do{
-            System.out.println("Enter source number:");
-            input = in.next();
-            Matcher m = validPattern.matcher(input);
-            valid = m.find();
-        }
-        while (!valid);
+        ArrayList<Integer> output = new ArrayList<Integer>();
 
-        return input;
+        do {
+            input = getBaseInput();
+
+            if (checkBaseInputForExit(input)){
+                output.add(-1);;
+            }
+
+            String[] strArry = input.split("\\s+");
+            output.add(Integer.parseInt(strArry[0]));
+            output.add(Integer.parseInt(strArry[1]));
+
+        }
+        while(!checkForValidInput(input));
+        return output;
     }
 
-    public static int getSourceBase(){
+    public static String getBaseInput() {
         Scanner in = new Scanner(System.in);
-        int base = 0;
-        boolean validator;
-        do {
-            System.out.print("Enter source base: ");
-            try{
-                base = in.nextInt();
-            }catch (Exception e){
-                getSourceBase();
-            }
-            validator = base == 2 || base == 8 || base == 16;
+        System.out.print("Enter two numbers in format: {source base} {target base} (To quit type /exit)");
+        return in.nextLine();
+    }
+
+    public static Boolean checkBaseInputForExit(String input) {
+        return input.equalsIgnoreCase("/exit");
+    }
+
+    public static Boolean checkBaseInputForNumbers(String input) {
+        String[] strArry = input.split("\\s+");
+        if (strArry.length != 2) {
+            return false;
         }
-        while (!validator);
-        in.close();
-        return base;
+        try {
+            int sourceBase = Integer.parseInt(strArry[0]);
+            int targetBase = Integer.parseInt(strArry[1]);
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Boolean checkForValidInput(String input) {
+        Boolean isExit = checkBaseInputForExit(input);
+        Boolean containsTwoValidNumbers = checkBaseInputForNumbers(input);
+
+        return isExit && containsTwoValidNumbers;
+
     }
 
 }
