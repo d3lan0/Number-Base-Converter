@@ -12,25 +12,21 @@ class SecondInput {
         this.target = target;
     }
 
-    public  BigInteger levelTwo() {
-        String input;
+    public  String levelTwo() {
         boolean validInput;
+        String stringInput;
 
-        do{
-            input = getLevelTwoInput();
-            validInput = checkForValidLevelTwoInput(input);
+        do {
+            stringInput = getLevelTwoInput();
+            validInput = checkForValidLevelTwoInput(String.valueOf(stringInput));
         }
         while (!validInput);
 
-        if (checkLeveTwoInputForBack(input)){
-            return (BigInteger.valueOf(-1));
+        if (checkLeveTwoInputForBack(String.valueOf(stringInput))) {
+            return "back";
         }
 
-        if (checkIfNumberIsHex(input, source)) {
-            return BigInteger.valueOf(Long.parseLong(input, source));
-        }
-
-        return BigInteger.valueOf(Long.parseLong(input));
+        return stringInput;
     }
 
     private String getLevelTwoInput() {
@@ -44,7 +40,7 @@ class SecondInput {
     }
 
     private boolean checkBaseInputForValidInput(String input) {
-        return checkIfNumberIsHex(input, source) || checkIfNumberIsLong(input);
+        return checkIfNumberIsHex(input, source) || checkIfNumberIsBigInt(input);
     }
 
     private boolean checkForValidLevelTwoInput(String input) {
@@ -63,9 +59,9 @@ class SecondInput {
 
     }
 
-    private static boolean checkIfNumberIsLong(String number) {
+    private static boolean checkIfNumberIsBigInt(String number) {
         try{
-            long value = Long.parseLong(number);
+            BigInteger num = new BigInteger(number);
             return true;
         }catch (Exception e){
             return false;
