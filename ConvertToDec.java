@@ -7,9 +7,9 @@ import java.util.ArrayList;
      String value;
      int base;
 
-     ConvertToDec(String value, int base) {
+     ConvertToDec(String value, int sourceBase) {
          this.value = value;
-         this.base = base;
+         this.base = sourceBase;
      }
 
 

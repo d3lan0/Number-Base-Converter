@@ -68,6 +68,8 @@ public class Hex {
         return decToHex.get(num);
     }
 
-    public int getInt(char letter) {return (int) hexToDec.get(letter);}
+    public int getInt(char letter) {
+        return (int) hexToDec.get(letter);
+    }
 
 }
